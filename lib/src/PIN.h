@@ -20,8 +20,8 @@ const int medicionMux = A0;
 
 //SALIDAS A SHIFT REGISTER
 const int SER = A1;
-const int SRCLK = A2;
-const int RCLK = A3;
+const int RCLK = A2;
+const int SRCLK = A3;
 
 //SALIDAS A PANTALLA SPI
 const int DC = 9;
@@ -77,5 +77,14 @@ int VsuministroT = 0;
 //BUZZER
 int Buzzer = 6;
 
+int flag0 = 0;
 
+
+int periodoEncendido = 0;
+const int timeTransOn = 5000; //tiempo Transcurrido Para Encender
+const int periodoRetraso = 5000; //constante de tiempo para el retraso en la transferencia de energia
+const int TimeStabilitySum = 15000; //tiempo de estabilidad del suministro
+int TensionMax = 260;
+int TensionMin = 200;
+unsigned long int tiempoAhora = 0;
 #endif //PIN_H

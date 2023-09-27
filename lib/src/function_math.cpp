@@ -152,6 +152,24 @@ void RedSumOff(void){ //0000 primeros 4 bits
     shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
     digitalWrite(RCLK, HIGH);
     digitalWrite(RCLK, LOW);
+    selectoraModoRedSum = 2;
+}
+
+void SumStart(void){
+    bitSet(shadowRegister, 2);
+    shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
+    digitalWrite(RCLK, HIGH);
+    digitalWrite(RCLK, LOW);
+}
+
+bool Cronometro(int tiempo){
+  int timeTransOn = tiempo;
+
+
+  periodoEncendido = millis() - tiempoAhora;
+
+  if(periodoEncendido >= timeTransOn)
+    return true;
 }
 
 /*void RTC (void){
