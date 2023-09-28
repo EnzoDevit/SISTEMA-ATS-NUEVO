@@ -163,13 +163,16 @@ void SumStart(void){
 }
 
 bool Cronometro(int tiempo){
+
   int timeTransOn = tiempo;
-
-
   periodoEncendido = millis() - tiempoAhora;
 
   if(periodoEncendido >= timeTransOn)
     return true;
+
+    else{
+      return false;
+    }
 }
 
 /*void RTC (void){

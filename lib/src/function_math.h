@@ -91,7 +91,7 @@
 
     void sendSMS(String number, String message);
 
-    bool Cronometro(int tiempo);
+    bool Cronometro(int tiempo, int okey);
 
 
     void FunctionsSMS(bool estadoRed, bool estadoGrupo, bool estadoSum); //FUNCIONES SMS
