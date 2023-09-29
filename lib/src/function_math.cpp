@@ -10,8 +10,8 @@ Source de function_math.h
 #include <SoftwareSerial.h>
 #include <Wire.h>
 //#include <RTClib.h>
-SoftwareSerial SIM800L(2,1); // RX, TX
-String phoneNumber = "+541162882372"; // Número de teléfono para enviar
+SoftwareSerial SIM800L(2, 1); // RX, TX
+String phoneNumber = "+541122575970"; // Número de teléfono para enviar
 String textMessage = ""; //Variable para almacenar el mensaje entrante
 
 void beginSetup(){
@@ -21,7 +21,6 @@ void beginSetup(){
    pinMode(medicionMux, INPUT);
    pinMode(Buzzer,OUTPUT);
    SIM800L.begin(57600); // Iniciar comunicación con el módulo SIM8default
-   Serial.begin(57600);
    Wire.begin(); //Modulo rtc
    //rtc.begin(); //Modulo rtc
    delay(50); //PREGUNTAR

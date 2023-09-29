@@ -121,7 +121,7 @@ void loop(){
 
       }
 
-      /*
+      
       if(textMessage.indexOf("APAGAR GRUPO") != -1){
         SIM800L.println("APAGAR GRUPO");
         textMessage = "";
@@ -130,11 +130,8 @@ void loop(){
           shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
           digitalWrite(RCLK, HIGH);
           digitalWrite(RCLK, LOW); //EN REALIDAD HAY Q SUMAR OTRA SALIDA PARA PODER CORTAR EL CONTACTO DEL GRUPO
-
-
-
       }
-    */
+    
     
   }
 }
@@ -148,8 +145,13 @@ break;
       Medicion::TensionSuministro();
       modRedSum();
 
-
-
+      if(textMessage.indexOf("APAGAR GRUPO") != -1){
+        digitalWrite(Buzzer, HIGH);
+        SIM800L.println("GRUPO APAGADO");
+        sendSMS(phoneNumber, "GRUPO APAGADO");
+        textMessage = "";
+        //CORTA EL ARRANQUE DEL GRUPO
+      }
   }
 
  break;
