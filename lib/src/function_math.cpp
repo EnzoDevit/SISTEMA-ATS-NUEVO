@@ -155,10 +155,25 @@ void RedSumOff(void){ //0000 primeros 4 bits
 }
 
 void SumStart(void){
-    bitSet(shadowRegister, 2);
-    shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
-    digitalWrite(RCLK, HIGH);
-    digitalWrite(RCLK, LOW);
+    if(Cronometro(1000) == true){
+      if(B == 0){
+        tiempoAhora = millis();
+        B++;
+      }
+
+      while(Cronometro(1000) == false && flag0 == 0 && flagGrupo == false){ //DA ARRANQUE AL GRUPO POR 5 SEG
+        bitSet(shadowRegister, 2);
+        shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
+        digitalWrite(RCLK, HIGH);
+        digitalWrite(RCLK, LOW);
+        periodoEncendido = millis() - tiempoAhora;
+        L = 0;
+        B = 0;
+        H = 0;
+        S = 1;
+        J = 0;
+    }
+  }
 }
 
 bool Cronometro(int tiempo){
@@ -366,7 +381,7 @@ void sendSMS(String number, String message) { //ENVIAR SMS, si no funciona cambi
 
 
 
-void FunctionsSMS(bool estadoRed, bool estadoGrupo, bool estadoSum){
+void FunctionsSMS(bool estadoRed, bool estadoSum){
 
   if (estadoRed == true){
     SIM800L.println("RED CORTADA POR DESPERFECTO EN LAS FASES");
@@ -374,22 +389,29 @@ void FunctionsSMS(bool estadoRed, bool estadoGrupo, bool estadoSum){
     textMessage = "";
   }
 
-  if (estadoGrupo == true && estadoRed == false){
-    SIM800L.println("GRUPO ACCIONADO");
-    sendSMS(phoneNumber, "GRUPO ACCIONADO"); // Enviar mensaje SMS de confirmación al teléfono
+  if (estadoSum == true){
+    SIM800L.println("SUMINISTRO FALLO");
+    sendSMS(phoneNumber, "SUMINISTRO FALLO"); // Enviar mensaje SMS de confirmación al teléfono
     textMessage = "";
   }
 
-  if (estadoGrupo == false && estadoRed == false){
-    SIM800L.println("GRUPO FALLO");
-    sendSMS(phoneNumber, "GRUPO FALLO"); // Enviar mensaje SMS de confirmación al teléfono
-    textMessage = "";
-  }
+}
 
-  if (estadoSum == true && estadoGrupo == true){
-    SIM800L.println("GRUPO FALLO");
-    sendSMS(phoneNumber, "GRUPO FALLO"); // Enviar mensaje SMS de confirmación al teléfono
-    textMessage = "";
-  }
+void printCambioModo(int nuevoModo) {
+  static int modoActual = -1;  // Inicializa el modo actual como -1 para asegurarte de que el mensaje se imprima en el primer cambio.
+  
+  if (nuevoModo != modoActual) {
+    if(nuevoModo == 0){
+      SIM800L.println("CAMBIO A MODO AUTOMATICO");
+      sendSMS(phoneNumber, "CAMBIO A MODO AUTOMATICO");
+      textMessage = "";
+    }
 
+    if(nuevoModo == 1){
+      SIM800L.println("CAMBIO A MODO MANUAL");
+      sendSMS(phoneNumber, "CAMBIO A MODO MANUAL");
+      textMessage = "";
+    }
+    modoActual = nuevoModo;
+  }
 }

@@ -11,6 +11,7 @@ int H = 0;
 int S = 0;
 int J = 0;
 bool xd = false;
+bool flagGrupo = false;
 
 void setup(){
   beginSetup();
@@ -27,10 +28,32 @@ void loop(){
   }
  // RTC();
 
+ if(textMessage.indexOf("APAGAR GRUPO") != -1){
+          //CORTA EL ARRANQUE DEL GRUPO
+          bitClear(shadowRegister, 2);
+          shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
+          digitalWrite(RCLK, HIGH);
+          digitalWrite(RCLK, LOW); //EN REALIDAD HAY Q SUMAR OTRA SALIDA PARA PODER CORTAR EL CONTACTO DEL GRUPO
+          flagGrupo = true;
+          SIM800L.println("GRUPO APAGADO");
+          sendSMS(phoneNumber, "GRUPO APAGADO");
+          textMessage = "";
+      }
+
+  if(textMessage.indexOf("ENCENDER GRUPO") != -1){
+          //ARRANQUE DEL GRUPO
+          SumStart();
+          flagGrupo = false;
+          SIM800L.println("GRUPO ENCENDIDO");
+          sendSMS(phoneNumber, "GRUPO ENCENDIDO");
+          textMessage = "";
+      }
+
   switch(selectoraModoAutoManual){
 
       case 0: //MODO AUTOMATICO
       {
+      printCambioModo(0);
       CambioModos();
       Medicion::TensionADC();
       Medicion::TensionRed();
@@ -41,8 +64,6 @@ void loop(){
         tiempoAhora = millis();
         L++;
       }
-
-
         Medicion::TensionADC();
         Medicion::TensionRed();
 
@@ -59,6 +80,7 @@ void loop(){
 
       else if(VredR <= TensionMin || VredR >= TensionMax || VredS <= TensionMin || VredS >= TensionMax || VredT <= TensionMin || VredT >= TensionMax){
         RedSumOff();
+        FunctionsSMS(true, false);
         //Serial.println("ALGO EN LAS FASES FALLO"); //avisa si hay alguna fase o todas las fases sin electricidad
         periodoEncendido = millis() - tiempoAhora;
         
@@ -67,27 +89,9 @@ void loop(){
         N++;
       }
 
-    if(Cronometro(1000) == true){
-      if(B == 0){
-        tiempoAhora = millis();
-        B++;
-      }
+      SumStart();
 
-      while(Cronometro(1000) == false && flag0 == 0){ //DA ARRANQUE AL GRUPO POR 5 SEG
-        bitSet(shadowRegister, 2);
-        shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
-        digitalWrite(RCLK, HIGH);
-        digitalWrite(RCLK, LOW);
-        periodoEncendido = millis() - tiempoAhora;
-        L = 0;
-        B = 0;
-        H = 0;
-        S = 1;
-        J = 0;
-    }
-  }
-
-  
+    if(flagGrupo == false){
       if(S == 1){ //CORTA EL ARRANQUE DEL GRUPO
         bitClear(shadowRegister, 2);
         shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
@@ -95,13 +99,20 @@ void loop(){
         digitalWrite(RCLK, LOW);
         flag0 = 2;
         S = 0;
+        flagGrupo = true;
       }
+    }
 
 
       if(H == 0){
         tiempoAhora = millis();
         H++;
       }
+
+    if(Cronometro(1000) == true){
+      Medicion::TensionADC();
+      Medicion::TensionSuministro();
+    }
 
       if(J == 0 && (Cronometro(1000) == true) && VsuministroR >= TensionMin && VsuministroR <= TensionMax && VsuministroS >= TensionMin && VsuministroS <= TensionMax && VsuministroT >= TensionMin && VsuministroT <= TensionMax){
           Serial.println("SE ENCENDIO EL GRUPO"); //avisa que se encendio el grupo electrogeno exitosamente
@@ -113,48 +124,32 @@ void loop(){
       }
       
       else{
+        FunctionsSMS(false, true);
         Serial.println("el encendido del grupo electrogeno fallo"); //avisa que el encendido del grupo electrogeno fallo
         if(xd == true){
           J = 1;
           xd = false;
         }
 
-      }
-
-      
-      if(textMessage.indexOf("APAGAR GRUPO") != -1){
-        SIM800L.println("APAGAR GRUPO");
-        textMessage = "";
-        //CORTA EL ARRANQUE DEL GRUPO
-          bitClear(shadowRegister, 2);
-          shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
-          digitalWrite(RCLK, HIGH);
-          digitalWrite(RCLK, LOW); //EN REALIDAD HAY Q SUMAR OTRA SALIDA PARA PODER CORTAR EL CONTACTO DEL GRUPO
-      }
-    
-    
+    }
   }
 }
+
 break;
   
   case 1:
+  {
+    printCambioModo(0);
     if(selectoraModoAutoManual == 1){
       CambioModos();
       Medicion::TensionADC();
       Medicion::TensionRed();
       Medicion::TensionSuministro();
       modRedSum();
-
-      if(textMessage.indexOf("APAGAR GRUPO") != -1){
-        digitalWrite(Buzzer, HIGH);
-        SIM800L.println("GRUPO APAGADO");
-        sendSMS(phoneNumber, "GRUPO APAGADO");
-        textMessage = "";
-        //CORTA EL ARRANQUE DEL GRUPO
-      }
   }
+}
 
- break;
+break;
 
   }
 }

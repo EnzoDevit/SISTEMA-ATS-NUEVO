@@ -91,6 +91,8 @@
 
     void sendSMS(String number, String message);
 
+    void printCambioModo(int nuevoModo); //AVISO DE CAMBIO DE MODO
+
     bool Cronometro(int tiempo, int okey);
 
 
