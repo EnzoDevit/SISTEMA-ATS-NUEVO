@@ -93,7 +93,7 @@
 
     void printCambioModo(int nuevoModo); //AVISO DE CAMBIO DE MODO
 
-    bool Cronometro(int tiempo, int okey);
+    bool Cronometro(int tiempo);
 
 
     void FunctionsSMS(bool estadoRed, bool estadoGrupo, bool estadoSum); //FUNCIONES SMS

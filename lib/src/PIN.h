@@ -87,4 +87,13 @@ const int TimeStabilitySum = 15000; //tiempo de estabilidad del suministro
 int TensionMax = 260;
 int TensionMin = 200;
 unsigned long int tiempoAhora = 0;
+
+int L = 0;
+int N = 0;
+int B = 0;
+int H = 0;
+int S = 0;
+int J = 0;
+bool xd = false;
+bool flagGrupo = false;
 #endif //PIN_H

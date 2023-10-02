@@ -4,14 +4,7 @@
 #include <function_math.cpp>
 
 
-int L = 0;
-int N = 0;
-int B = 0;
-int H = 0;
-int S = 0;
-int J = 0;
-bool xd = false;
-bool flagGrupo = false;
+
 
 void setup(){
   beginSetup();
@@ -89,7 +82,25 @@ void loop(){
         N++;
       }
 
-      SumStart();
+      if(Cronometro(1000) == true){
+      if(B == 0){
+        tiempoAhora = millis();
+        B++;
+      }
+
+      while(Cronometro(1000) == false && flag0 == 0 && flagGrupo == false){ //DA ARRANQUE AL GRUPO POR 5 SEG
+        bitSet(shadowRegister, 2);
+        shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
+        digitalWrite(RCLK, HIGH);
+        digitalWrite(RCLK, LOW);
+        periodoEncendido = millis() - tiempoAhora;
+        L = 0;
+        B = 0;
+        H = 0;
+        S = 1;
+        J = 0;
+    }
+  }
 
     if(flagGrupo == false){
       if(S == 1){ //CORTA EL ARRANQUE DEL GRUPO
@@ -125,7 +136,6 @@ void loop(){
       
       else{
         FunctionsSMS(false, true);
-        Serial.println("el encendido del grupo electrogeno fallo"); //avisa que el encendido del grupo electrogeno fallo
         if(xd == true){
           J = 1;
           xd = false;
@@ -139,7 +149,7 @@ break;
   
   case 1:
   {
-    printCambioModo(0);
+    printCambioModo(1);
     if(selectoraModoAutoManual == 1){
       CambioModos();
       Medicion::TensionADC();
