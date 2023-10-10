@@ -42,6 +42,7 @@ void loop(){
           textMessage = "";
       }
 
+ muestreo();
   switch(selectoraModoAutoManual){
 
       case 0: //MODO AUTOMATICO

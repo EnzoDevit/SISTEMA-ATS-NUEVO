@@ -27,6 +27,10 @@ void beginSetup(){
    SIM800L.println("AT+CMGF=1"); // Establecer el modo de texto SMS
    delay(50); //PTRGUNTAR              
    SIM800L.println("AT+CNMI=2,2,0,0,0"); // Enviar los mensajes SMS recibidos al puerto serie
+     tft.begin();
+  tft.setRotation(3);
+  tft.fillScreen(ILI9341_BLACK);
+  tft.setTextColor(ILI9341_WHITE, 0X0000);
 }
 
 
@@ -414,4 +418,97 @@ void printCambioModo(int nuevoModo) {
     }
     modoActual = nuevoModo;
   }
+}
+
+void muestreo (void){
+ int circleX = 160;  // Coordenada X del centro del círculo
+int circleY = 55;  // Coordenada Y del centro del círculo
+  int radius = 35;
+
+
+  int circleX2 = 55;  // Coordenada X del segundo círculo
+int circleY2 = 55;  // Coordenada Y del segundo círculo
+int radius2 = 35;
+
+
+ int circleX3 = 265;  // Coordenada X del segundo círculo
+int circleY3 = 55;  // Coordenada Y del segundo círculo
+int radius3 = 35;
+
+
+
+
+ int circleX4 = 55;  // Coordenada X del segundo círculo
+int circleY4 = 180;  // Coordenada Y del segundo círculo
+int radius4 = 35;
+
+
+
+ int circleX5 = 160;  // Coordenada X del segundo círculo
+int circleY5 = 180;  // Coordenada Y del segundo círculo
+int radius5 = 35;
+
+
+ int circleX6 = 265;  // Coordenada X del segundo círculo
+int circleY6 = 180;  // Coordenada Y del segundo círculo
+int radius6= 35;
+
+  tft.drawCircle(circleX, circleY, radius, textColor);
+  tft.drawCircle(circleX2, circleY2, radius2, textColor1);
+  tft.drawCircle(circleX3, circleY3, radius3, textColor2);
+  tft.drawCircle(circleX4, circleY4, radius4, textColor1);
+  tft.drawCircle(circleX5, circleY5, radius5, textColor);
+  tft.drawCircle(circleX6, circleY6, radius6, textColor2);
+
+  //primer 220
+   tft.setTextSize(2);
+  int textX2 = circleX2 -17; // Ajusta la posición en función del tamaño de la fuente
+  int textY2= 47;
+  tft.setCursor(textX2, textY2);
+  tft.print(VredR);
+
+  //segundo 220
+  tft.setTextSize(2);
+  int textX = circleX -17; // Ajusta la posición en función del tamaño de la fuente
+  int textY = 47;
+  tft.setCursor(textX, textY);
+  tft.print(VredS);
+
+  //tercer 220
+   tft.setTextSize(2);
+  int textX3 = circleX3 -17; // Ajusta la posición en función del tamaño de la fuente
+  int textY3= 47;
+  tft.setCursor(textX3, textY3);
+  tft.print(VredT);
+
+  //cuarto 220
+   tft.setTextSize(2);
+  int textX4 = circleX4 -17; // Ajusta la posición en función del tamaño de la fuente
+  int textY4= 173;
+  tft.setCursor(textX4, textY4);
+  tft.print(VsuministroR);
+
+  //quinto 220
+   tft.setTextSize(2);
+  int textX5 = circleX5 -17; // Ajusta la posición en función del tamaño de la fuente
+  int textY5= 173;
+  tft.setCursor(textX5, textY5);
+  tft.print(VsuministroS);
+
+  //sexto 220
+   tft.setTextSize(2);
+  int textX6 = circleX6 -17; // Ajusta la posición en función del tamaño de la fuente
+  int textY6= 173;
+  tft.setCursor(textX6, textY6);
+  tft.print(VsuministroT);
+
+  int roundRectX = 0;
+  int roundRectY = 0;
+  int roundRectWidth = 320;
+  int roundRectHeight = 240;
+  int borderRadius = 10;
+  uint16_t borderColor = ILI9341_RED;
+
+
+  tft.drawRoundRect(roundRectX, roundRectY, roundRectWidth, roundRectHeight, borderRadius, borderColor);
 }

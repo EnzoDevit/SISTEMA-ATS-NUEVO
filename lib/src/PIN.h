@@ -7,12 +7,56 @@
 
 #ifndef PIN_H
 #define PIN_H
-#include <SPI.h>
-/*#include <UTouch.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_ILI9341.h>*/
 
-//SOFTWARE SERIAL Y VARIABLES PARA MODULO SM800L (SMS)
+#include <Adafruit_ILI9341.h>
+#include <SPI.h>
+
+
+
+#define TFT_CS 10
+#define TFT_DC 9
+#define TFT_RST 8
+
+Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
+
+uint16_t textColor = ILI9341_GREEN;
+uint16_t textColor1 = ILI9341_RED;
+uint16_t textColor2 = ILI9341_BLUE;
+//PANTALLA
+
+int circleX = 160;  // Coordenada X del centro del círculo
+int circleY = 55;  // Coordenada Y del centro del círculo
+  int radius = 35;
+
+
+  int circleX2 = 55;  // Coordenada X del segundo círculo
+int circleY2 = 55;  // Coordenada Y del segundo círculo
+int radius2 = 35;
+
+
+ int circleX3 = 265;  // Coordenada X del segundo círculo
+int circleY3 = 55;  // Coordenada Y del segundo círculo
+int radius3 = 35;
+
+
+
+
+ int circleX4 = 55;  // Coordenada X del segundo círculo
+int circleY4 = 180;  // Coordenada Y del segundo círculo
+int radius4 = 35;
+
+
+
+ int circleX5 = 160;  // Coordenada X del segundo círculo
+int circleY5 = 180;  // Coordenada Y del segundo círculo
+int radius5 = 35;
+
+
+ int circleX6 = 265;  // Coordenada X del segundo círculo
+int circleY6 = 180;  // Coordenada Y del segundo círculo
+int radius6= 35;
+
+
 
 
 //ENTRADA ANALOGICA MUX

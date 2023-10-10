@@ -95,6 +95,8 @@
 
     bool Cronometro(int tiempo);
 
+    void muestreo (void);
+
 
     void FunctionsSMS(bool estadoRed, bool estadoGrupo, bool estadoSum); //FUNCIONES SMS
 
