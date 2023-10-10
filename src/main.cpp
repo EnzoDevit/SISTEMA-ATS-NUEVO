@@ -52,6 +52,7 @@ void loop(){
       Medicion::TensionADC();
       Medicion::TensionRed();
       Medicion::TensionSuministro();
+      muestreo();
       
     if(VredR <= TensionMax && VredR >= TensionMin && VredS <= TensionMax && VredS >= TensionMin && VredT <= TensionMax && VredT >= TensionMin){
       if(L == 0){
@@ -100,6 +101,7 @@ void loop(){
         H = 0;
         S = 1;
         J = 0;
+        muestreo();
     }
   }
 
@@ -157,6 +159,7 @@ break;
       Medicion::TensionRed();
       Medicion::TensionSuministro();
       modRedSum();
+      muestreo();
   }
 }
 

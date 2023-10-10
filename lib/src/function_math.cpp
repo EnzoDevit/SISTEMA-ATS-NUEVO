@@ -209,7 +209,7 @@ bool Cronometro(int tiempo){
   @note tienen que tener cuidado si modifican esta funcion (mejor si no lo hacen) debido a que esta funcion es uno de los corazones del codigo y por ende del proyecto. para chanchez y emo, con amor encito.
 */
 void Medicion:: TensionSuministro(void){
-   
+  
    for (unsigned int i = 0; i<filas; i++)
   {
     if (tensionArduinoInputSum_R>=matrizTabla[i][1] && tensionArduinoInputSum_R<= matrizTabla[i+1][1])
@@ -261,30 +261,33 @@ void Medicion::TensionRed(void){
 */
 void Medicion::TensionADC(void)
   {
-    adcRed_R();
-    int tensionAdcRed_R = analogRead(medicionMux);
-    adcRed_S();
-    int tensionAdcRed_S = analogRead(medicionMux);
-    adcRed_T();
-    int tensionAdcRed_T = analogRead(medicionMux);
-    adcSum_R();
-    int tensionAdcSuministro_R = analogRead(medicionMux);
-    adcSum_S();
-    int tensionAdcSuministro_S = analogRead(medicionMux);
-    adcSum_T();
-    int tensionAdcSuministro_T = analogRead(medicionMux);
+    for(int i = 0; i<100; i++){
+      adcRed_R();
+      int tensionAdcRed_R = analogRead(medicionMux);
+      adcRed_S();
+      int tensionAdcRed_S = analogRead(medicionMux);
+      adcRed_T();
+      int tensionAdcRed_T = analogRead(medicionMux);
+      adcSum_R();
+      int tensionAdcSuministro_R = analogRead(medicionMux);
+      adcSum_S();
+      int tensionAdcSuministro_S = analogRead(medicionMux);
+      adcSum_T();
+      int tensionAdcSuministro_T = analogRead(medicionMux);
 
-    tensionArduinoInputRed_R = ((tensionAdcRed_R * 5.0) / 1024);
-    tensionArduinoInputRed_S = ((tensionAdcRed_S * 5.0) / 1024);
-    tensionArduinoInputRed_T = ((tensionAdcRed_T * 5.0) / 1024);
-    tensionArduinoInputSum_R = ((tensionAdcSuministro_R * 5.0) / 1024);
-      //Serial.print(tensionArduinoInputSum_R);
-      //Serial.print("\t");
-    tensionArduinoInputSum_S = ((tensionAdcSuministro_S * 5.0) / 1024);
-      //Serial.print(tensionArduinoInputSum_S);
-      //Serial.print("\t");
-    tensionArduinoInputSum_T = ((tensionAdcSuministro_T * 5.0) / 1024);
-      //Serial.println(tensionArduinoInputSum_T);
+      tensionArduinoInputRed_R = ((tensionAdcRed_R * 5.0) / 1024);
+      tensionArduinoInputRed_S = ((tensionAdcRed_S * 5.0) / 1024);
+      tensionArduinoInputRed_T = ((tensionAdcRed_T * 5.0) / 1024);
+      tensionArduinoInputSum_R = ((tensionAdcSuministro_R * 5.0) / 1024);
+        //Serial.print(tensionArduinoInputSum_R);
+        //Serial.print("\t");
+      tensionArduinoInputSum_S = ((tensionAdcSuministro_S * 5.0) / 1024);
+        //Serial.print(tensionArduinoInputSum_S);
+        //Serial.print("\t");
+      tensionArduinoInputSum_T = ((tensionAdcSuministro_T * 5.0) / 1024);
+        //Serial.println(tensionArduinoInputSum_T);
+      
+    }
   }
 
 
