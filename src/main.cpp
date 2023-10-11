@@ -68,6 +68,7 @@ void loop(){
         selectoraModoRedSum = 0;
           RedOn();
           flag0 = 0;
+          flagGrupo = false;
           N = 0;
           B = 0;
         }
