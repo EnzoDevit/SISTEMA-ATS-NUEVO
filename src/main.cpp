@@ -8,7 +8,7 @@
 
 void setup(){
   beginSetup();
-  digitalWrite(Buzzer, HIGH);
+ // digitalWrite(Buzzer, HIGH);
   delay(500);
   digitalWrite(Buzzer, LOW);
  
@@ -20,6 +20,7 @@ void loop(){
     textMessage += c;
   }
  // RTC();
+ 
 
  if(textMessage.indexOf("APAGAR GRUPO") != -1){
           //CORTA EL ARRANQUE DEL GRUPO
@@ -90,7 +91,7 @@ void loop(){
         B++;
       }
 
-      while(Cronometro(1000) == false && flag0 == 0 && flagGrupo == false){ //DA ARRANQUE AL GRUPO POR 5 SEG
+      while(Cronometro(5000) == false && flag0 == 0 && flagGrupo == false){ //DA ARRANQUE AL GRUPO POR 5 SEG
         bitSet(shadowRegister, 2);
         shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
         digitalWrite(RCLK, HIGH);
@@ -101,8 +102,16 @@ void loop(){
         H = 0;
         S = 1;
         J = 0;
+        if(F==0)
+          tft.fillScreen(ILI9341_WHITE);
+        F = 1;
         muestreo();
     }
+  }
+
+  if(F==1){
+    tft.fillScreen(ILI9341_WHITE);
+    F = 0;
   }
 
     if(flagGrupo == false){
