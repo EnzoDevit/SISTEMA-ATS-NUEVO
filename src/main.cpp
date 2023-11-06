@@ -8,10 +8,6 @@
 
 void setup(){
   beginSetup();
- // digitalWrite(Buzzer, HIGH);
-  delay(500);
-  digitalWrite(Buzzer, LOW);
- 
 }
 
 void loop(){
@@ -71,16 +67,18 @@ void loop(){
           flagGrupo = false;
           N = 0;
           B = 0;
+          xd = false;
         }
       }
     }
 
       else if(VredR <= TensionMin || VredR >= TensionMax || VredS <= TensionMin || VredS >= TensionMax || VredT <= TensionMin || VredT >= TensionMax){
+       if(xd == false){
         RedSumOff();
         FunctionsSMS(true, false);
-        //Serial.println("ALGO EN LAS FASES FALLO"); //avisa si hay alguna fase o todas las fases sin electricidad
-        periodoEncendido = millis() - tiempoAhora;
-        
+        //Serial.println("ALGO EN LAS FASES FALLO"); //avisa si hay alguna fase o todas las fases sin electricidad;
+       }
+
         if(N == 0){
         tiempoAhora = millis();
         N++;
@@ -133,27 +131,27 @@ void loop(){
         H++;
       }
 
-    if(Cronometro(1000) == true){
+    if(Cronometro(2000) == false){
       Medicion::TensionADC();
       Medicion::TensionSuministro();
     }
-
-      if(J == 0 && (Cronometro(1000) == true) && VsuministroR >= TensionMin && VsuministroR <= TensionMax && VsuministroS >= TensionMin && VsuministroS <= TensionMax && VsuministroT >= TensionMin && VsuministroT <= TensionMax){
-          Serial.println("SE ENCENDIO EL GRUPO"); //avisa que se encendio el grupo electrogeno exitosamente
-          Serial.println("se encendio el grupo electrogeno exitosamente y las fases del grupo estan okey"); //avisa que se encendio el grupo electrogeno exitosamente y las fases del grupo estan okey
-          selectoraModoRedSum = 1;
-          SumOn();
-          flag0 = 1;
-          xd = true;
-      }
+    
+    if(J == 0 && (Cronometro(2000) == true) && VsuministroR >= TensionMin && VsuministroR <= TensionMax && VsuministroS >= TensionMin && VsuministroS <= TensionMax && VsuministroT >= TensionMin && VsuministroT <= TensionMax){
+        Serial.println("SE ENCENDIO EL GRUPO"); //avisa que se encendio el grupo electrogeno exitosamente
+        Serial.println("se encendio el grupo electrogeno exitosamente y las fases del grupo estan okey"); //avisa que se encendio el grupo electrogeno exitosamente y las fases del grupo estan okey
+        selectoraModoRedSum = 1;
+        SumOn();
+        flag0 = 1;
+        flagGrupo = true;
+        xd = true;
+    }
       
-      else{
-        FunctionsSMS(false, true);
-        if(xd == true){
-          J = 1;
-          xd = false;
-        }
-
+    else{
+      FunctionsSMS(false, true);
+      if(xd == true){
+        J = 1;
+        xd = false;
+      }
     }
   }
 }

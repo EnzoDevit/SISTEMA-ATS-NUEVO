@@ -158,28 +158,6 @@ void RedSumOff(void){ //0000 primeros 4 bits
     selectoraModoRedSum = 2;
 }
 
-void SumStart(void){
-    if(Cronometro(1000) == true){
-      if(B == 0){
-        tiempoAhora = millis();
-        B++;
-      }
-
-      while(Cronometro(1000) == false && flag0 == 0 && flagGrupo == false){ //DA ARRANQUE AL GRUPO POR 5 SEG
-        bitSet(shadowRegister, 2);
-        shiftOut(SER, SRCLK, MSBFIRST, shadowRegister);
-        digitalWrite(RCLK, HIGH);
-        digitalWrite(RCLK, LOW);
-        periodoEncendido = millis() - tiempoAhora;
-        L = 0;
-        B = 0;
-        H = 0;
-        S = 1;
-        J = 0;
-    }
-  }
-}
-
 bool Cronometro(int tiempo){
 
   int timeTransOn = tiempo;
@@ -341,13 +319,13 @@ void balanceoDeFasesRed(void){
   float desviacion_Sred = ((VredS - promedioRed) / promedioRed) * 100; //desviacion S
   float desviacion_Tred = ((VredT - promedioRed) / promedioRed) * 100; //desviacion T
 
-  if(desviacion_Rred >= 7){
+  if(desviacion_Rred >= 3){
       //escribir en pantalla "FASES DESBALANCEADAS" "FASE R RED DESBALANCEADA, 'porcentaje de desviacion' "
   }
-  if(desviacion_Sred >= 7){
+  if(desviacion_Sred >= 3){
       //escribir en pantalla "FASES DESBALANCEADAS" "FASE s RED DESBALANCEADA, 'porcentaje de desviacion' "
   }
-  if(desviacion_Tred >= 7){
+  if(desviacion_Tred >= 3){
       //escribir en pantalla "FASES DESBALANCEADAS" "FASE T RED DESBALANCEADA, 'porcentaje de desviacion' "
   }
 }
